@@ -304,7 +304,7 @@ def plotSummaryBar(resultDbs, metricName, summaryStatName, runNames=None, **kwar
     width = 0.25
 
     fig, ax = plt.subplots(figsize=(10, 6))
-
+#     labels = []
     for i in range(stats_size):
         label = '{}_{}_{}'.format(
             metricName, stats[runNames[0]]['slicerName'][i],
@@ -314,7 +314,9 @@ def plotSummaryBar(resultDbs, metricName, summaryStatName, runNames=None, **kwar
         if stats_size == 1:
             shift = 0
         else:
+#             continue
             shift = -width/2 + i*width/(stats_size-1)
+#         shift = 0
 
         for key in stats:
             try:
@@ -322,7 +324,8 @@ def plotSummaryBar(resultDbs, metricName, summaryStatName, runNames=None, **kwar
             except IndexError:
                 summaryValues.append(0)
 
-        ax.bar(x+shift, summaryValues, width, label=label)
+        ax.bar(x+shift, summaryValues, width, align='center', label=label)
+#         labels.append()
 
     # set whether to draw hline
     hline = kwargs.get('axhline')
@@ -333,9 +336,10 @@ def plotSummaryBar(resultDbs, metricName, summaryStatName, runNames=None, **kwar
     ax.set_xticklabels(runNames)
     plt.xticks(rotation=80)
     plt.title('Bar Chart for Summary Stat: {} of Metric: {}'.format(
-        summaryStatName, metricName))
-    plt.ylabel('Summary Values')
+        summaryStatName, metricName), size = 30)
+    plt.ylabel('Summary Values', size = 25)
     plt.legend(loc='best')
+    plt.gca().tick_params(which='y', labelsize=20)
     fig.tight_layout()
 
     
